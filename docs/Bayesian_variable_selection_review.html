@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="Bayesian_variable_selection_review_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Bayesian_variable_selection_review_files/libs/quarto-html/tabby.min.js"></script>
+<script src="Bayesian_variable_selection_review_files/libs/quarto-html/popper.min.js"></script>
+<script src="Bayesian_variable_selection_review_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="Bayesian_variable_selection_review_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Bayesian_variable_selection_review_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="Bayesian_variable_selection_review_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.0.36">
+
+  <meta name="author" content="Kehe Zhang">
+  <meta name="dcterms.date" content="2023-11-17">
+  <title>Bayesian Approaches to Variable Selection</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="Bayesian_variable_selection_review_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="Bayesian_variable_selection_review_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="Bayesian_variable_selection_review_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="Bayesian_variable_selection_review_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="Bayesian_variable_selection_review_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="Bayesian_variable_selection_review_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="Bayesian_variable_selection_review_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="Bayesian_variable_selection_review_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="Bayesian_variable_selection_review_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  
+  <script src="Bayesian_variable_selection_review_files/libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="Bayesian_variable_selection_review_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="center">
+  <h1 class="title">Bayesian Approaches to Variable Selection</h1>
+  <p class="subtitle">Introduction and example demonstration</p>
+  <p class="author">Kehe Zhang</p>
+  <p class="date">November 17, 2023</p>
+</section>
+
+<section class="slide level2">
+
+<h3 id="outline">Outline</h3>
+<ul>
+<li><p>Introduction</p>
+<ul>
+<li>Motivation</li>
+<li>Traditional variable selection</li>
+<li>Bayesian Framework</li>
+</ul></li>
+<li><p>Bayesian Approach to Variable Selection</p>
+<ul>
+<li>Model setup</li>
+<li>Bayesian model selection</li>
+<li>Spike-and-slab priors</li>
+<li>Shrinkage priors</li>
+</ul></li>
+<li><p>Application and Extensions</p>
+<ul>
+<li>Example in Nimble</li>
+<li>Recent Developments</li>
+</ul></li>
+</ul>
+</section>
+<section id="introduction" class="slide level2">
+<h2>Introduction</h2>
+<h3 id="motivation">Motivation</h3>
+<div class="columns">
+<div class="column" style="width:75%;">
+<p><strong>Big Data Challenge:</strong></p>
+<ul>
+<li><p>Biology/Genomics/Health Care</p></li>
+<li><p>Public Health/Environmental Science</p></li>
+<li><p>Economics/Political Science</p></li>
+<li><p>Industry/Technology</p></li>
+</ul>
+<p>Given:</p>
+<ul>
+<li><p><span class="math inline">\(Y\)</span>, an outcome of interest (AKA response or dependent variable)</p></li>
+<li><p><span class="math inline">\(X_1\)</span>, …, <span class="math inline">\(X_p\)</span>, a set of <span class="math inline">\(p\)</span> potential explanatory variables (AKA covariates or independent variables).</p></li>
+</ul>
+<p><strong>How can we select the most important variables?</strong></p>
+<aside class="notes">
+<p>In genomic studies where high-throughput technologies are used to profile thousands of genetic markers, only a few of those markers are expected to be associated with the phenotype or outcome.</p>
+<p>Variable selection is especially important in situations where a large number of potential predictors are available.</p>
+<p>The inclusion of unnecessary variables in a model has several disadvantages, such as increasing the risk of multicollinearity, insufficient samples to estimate all model parameters, overfitting the current data leading to poor predictive performance on new data and making model interpretation more difficult</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div><div class="column" style="width:25%;">
+<p><img data-src="images/big_data-02.webp" width="455"></p>
+</div>
+</div>
+</section>
+<section id="variable-selection" class="slide level2">
+<h2>Variable Selection</h2>
+<h3 id="linear-regression-model">Linear Regression Model</h3>
+<p><span class="math display">\[
+\boldsymbol{y}_{n \times 1} = \boldsymbol{X}_{n \times p} \boldsymbol{\beta}_{p \times 1} + \boldsymbol{\epsilon}_{n \times 1}
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\mathbf{X}= (\mathbf{x}_1',\ldots, \mathbf{x}_n')'\)</span> is the design matrix of covariates</p></li>
+<li><p><span class="math inline">\(\boldsymbol{\beta}=(\beta_1, \beta_2, \ldots, \beta_p)'\)</span> denotes a vector of coefficients</p></li>
+<li><p><span class="math inline">\(\boldsymbol{y}\)</span> is a vector of responses <span class="math inline">\((y_1, y_2, \ldots, y_n)'\)</span>.</p></li>
+<li><p><span class="math inline">\(\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \sigma^2 \boldsymbol{I}_n)\)</span>.</p></li>
+</ul>
+<h3 id="traditional-methods">Traditional Methods:</h3>
+<ul>
+<li><p>Hypothesis testing methods:</p>
+<ul>
+<li>Forward/backward, stepwise and best subset selection</li>
+<li>The OLS estimator: <span class="math display">\[ \hat{\beta}_{OLS} = (X'X)^{-1}X'y
+   = \text{arg min}_\beta \ ||y - X\beta||^2\]</span></li>
+</ul></li>
+<li><p>Penalized parameter estimation methods:</p>
+<ul>
+<li>LASSO, Ridge and Elastic net.</li>
+<li>The Ridge estimator: <span class="math display">\[ \hat{\beta}_{\text{Ridge}} = \text{arg min}_\beta \ ||y - X\beta||^2 + \lambda||\beta||_2 \]</span></li>
+<li>The Lasso estimator: <span class="math display">\[ \hat{\beta}_{\text{Lasso}} = \text{arg min}_\beta \ ||y - X\beta||^2 + \lambda||\beta||_1 \]</span></li>
+<li>Pros:
+<ul>
+<li>Controlled by a single hyperparameter</li>
+<li>Scalable to large datasets</li>
+<li>Well-developed theoretical foundation</li>
+</ul></li>
+<li>Cons:
+<ul>
+<li>Struggles with highly correlated predictors</li>
+<li>Ignoring uncertainty in the model selection process</li>
+</ul></li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li><p>Typical Strategy: sequentially change model until a good fit is produced, and then base inferences/predictions on the final selected model. Strategy is flawed in ignoring uncertainty in the model selection process - leads to major bias in many cases.</p></li>
+<li><p>There is typically substantial uncertainty in the model &amp; it is more realistic to suppose that there is a list of a priori plausible models</p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bayesian-framework" class="slide level2 smaller">
+<h2>Bayesian Framework</h2>
+<aside class="notes">
+<p>The Bayesian approaches thus differ from frequentist approach by its ability to incorporating <strong>prior information</strong>, which plays an important role in variable selection and often serves as a means of stabilizing inferences in high-dimensional settings.</p>
+<p>The variable selection can be considered as a special case of model selection problem in which each model under consideration corresponds to a distinct subset of variables.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<ul>
+<li><p>Bayesian Inference <span class="math display">\[
+p(\theta|Y) = \frac{
+  p(Y|\theta)p(\theta)}{
+  \int_{\Theta} p(Y|\theta)
+              p(\theta) d\theta
+  } \propto p(Y|\theta)p(\theta)
+\]</span></p></li>
+<li><p>Incorporate a priori belief of the models and parameter estimates.</p></li>
+<li><p>The <strong>uncertainty</strong> of the model is estimated through the <strong>posterior probability</strong> of each possible model and the distribution of the posterior parameters.</p></li>
+<li><p>The posterior probability provides a more straightforward interpretation of variable importance, and it can be used to compare non-nested models.</p></li>
+<li><p>Bayesian linear regression <strong>maximum a posterior (MAP)</strong> estimator: <span class="math display">\[ \hat{\beta}_{\text{MAP}} = \text{arg max}_\beta \ p(\beta|Y)  \]</span></p>
+<ul>
+<li>With a Laplace (double-exponential) prior <span class="math inline">\(\rightarrow \hat{\beta}_{\text{Lasso}}\)</span></li>
+<li>With a Gaussian prior <span class="math inline">\(\rightarrow \hat{\beta}_{\text{Ridge}}\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="bayesian-approach-to-variable-selection" class="slide level2 smaller">
+<h2>Bayesian Approach to Variable Selection</h2>
+<aside class="notes">
+<p>The goal of model selection is to identify the most likely underlying model that generates the data.</p>
+<ul>
+<li><p>In the absence of prior knowledge about which models in the list are more plausible, one often lets <span class="math inline">\(p(M_\gamma) = 1/M\)</span></p></li>
+<li><p>This penalty is due to the integration across the prior, which is higher in larger models.</p></li>
+<li><p>Identifying parsimonious explanation of observed data (post prob concentrates the most parsimonious models that explain the data)</p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<h3 id="bayesian-model-selection">1. Bayesian Model Selection</h3>
+<p>With <span class="math inline">\(p\)</span> predictors, we explore <span class="math inline">\(2^p\)</span> possible models.</p>
+<!-- -->
+<h4 id="model-representation">Model Representation</h4>
+<ul>
+<li>Each model is indexed by a binary vector <span class="math inline">\(\mathbf{\gamma} = (\gamma_1, \ldots, \gamma_p)\)</span>.
+<ul>
+<li><span class="math inline">\(\gamma_j = 1\)</span> implies inclusion of <span class="math inline">\(X_j\)</span> in the model <span class="math inline">\(( \beta_j \neq 0 )\)</span>, and <span class="math inline">\(\gamma_j = 0\)</span> implies exclusion of <span class="math inline">\(X_j\)</span>.</li>
+<li>Example: <span class="math inline">\(\mathbf{\gamma}= (1, 0, 1, 0, \ldots, 0)\)</span> represents a model with predictors <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_3\)</span> only.</li>
+</ul></li>
+<li>Let <span class="math inline">\(\mathcal{M}\)</span> be the space of all possible models and <span class="math inline">\(M_\gamma \in \mathcal{M}\)</span> be the model that includes the <span class="math inline">\(X_j\)</span> with <span class="math inline">\(\gamma_j=1\)</span>.</li>
+<li><span style="color:orange;"><strong>Prior distributions</strong>: <span class="math inline">\(p(M_\gamma)\)</span></span> for each model and <span class="math inline">\(p(\boldsymbol{\theta}_\gamma | M_\gamma)\)</span> for the parameters under each model.</li>
+<li>The <span style="color:red">posterior probability</span> of a model is given by:</li>
+</ul>
+<p><span class="math display">\[ \color{red}{p(M_\gamma| \mathbf{y})} = \frac{\color{steelblue}{p(\mathbf{y}| M_\gamma)} \color{orange}{p(M_\gamma)}}{\sum\limits_{\gamma' \in \mathcal{M}} \color{steelblue}{p(\mathbf{y} | M_\gamma')} \color{orange}{p(M_\gamma)}} \]</span></p>
+<ul>
+<li><span class="math inline">\(\color{steelblue}{p(\mathbf{y}| M_\gamma)}= \int p(\mathbf{y} | M_\gamma, \boldsymbol{\theta}_\gamma) p(\boldsymbol{\theta}_\gamma|M_\gamma) d\boldsymbol{\theta}_\gamma\)</span> is the marginal likelihood of the data for the model <span class="math inline">\(M_\gamma\)</span> (marginalized over the entire parameter space).</li>
+</ul>
+<h4 id="how-do-we-choose-among-the-2p-models">How do we choose among the <span class="math inline">\(2^P\)</span> models?</h4>
+<ul>
+<li><p>By balancing model fit and model complexity (trade-off): <span class="math display">\[\text{Score} = \text{Fit} - \text{Complexity}\]</span></p></li>
+<li><p><strong>Fit</strong>: Marginal probability of data given model <span class="math inline">\(\color{steelblue}{p(\mathbf{y} | M_\gamma)}\)</span></p></li>
+<li><p><strong>Complexity</strong>: Prior probability of model <span class="math inline">\(\color{orange}{p(M_\gamma)}\)</span></p></li>
+<li><p>Unlike the maximized likelihood, the marginal likelihood has an implicit penalty for model complexity.</p></li>
+<li><p>The highest posterior probability model (HPM) is then the model with the highest marginal likelihood.</p></li>
+</ul>
+</section>
+<section id="selection-criteria" class="slide level2">
+<h2>Selection Criteria</h2>
+<h4 id="bayes-factor">Bayes Factor</h4>
+<aside class="notes">
+<ul>
+<li><p>One of the most commonly used selection criteria for Bayesian model comparison</p></li>
+<li><p>Where ( BF_{12} ) is a ratio of marginal likelihoods of models M1 and M2.</p></li>
+<li><p>For each covariate under consideration, PIP is the sum of the normalized posterior probabilities of all models where the covariate is included:</p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<ul>
+<li><p>Bayes factor (BF) can be used to compare and choose between candidate models, where each candidate model corresponds to a hypothesis.</p></li>
+<li><p>Unlike frequentist hypothesis testing methods, Bayes factors do not require the models to be nested.</p></li>
+<li><p>The BF for model <span class="math inline">\(M_{1}\)</span> over <span class="math inline">\(M_2\)</span> is the ratio of posterior to prior odds:</p></li>
+</ul>
+<p><span class="math display">\[ BF_{12} = \frac{p(y | M_1)}{p(y | M_2)} \]</span></p>
+<ul>
+<li><p><strong>Interpretation</strong>:</p>
+<ul>
+<li>Values of <span class="math inline">\(BF_{12} &gt;1\)</span> suggest <span class="math inline">\(M_1\)</span> is preferred.</li>
+<li>The larger <span class="math inline">\(BF_{12}\)</span> is, the stronger the evidence in favor of <span class="math inline">\(M_1\)</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h4 id="posterior-inclusion-probability-pip">Posterior inclusion probability (PIP)</h4>
+<p><span class="math display">\[
+P(\gamma_j = 1 | y) = \sum_{x_j \in M_\gamma} P(M_\gamma | y)
+\]</span></p>
+<ul>
+<li>A higher PIP value for a covariate indicates stronger evidence that it is important for predicting the response variable.</li>
+</ul>
+<h4 id="key-inferences">Key Inferences</h4>
+<ul>
+<li><strong>Ranking</strong>: Order variables by their Posterior Inclusion Probability (PIP).</li>
+<li><strong>Selection</strong>: Choose variables with PIP above a certain threshold, e.g., PIP ≥ 0.5.
+<ul>
+<li>also referred as median probability model (MPM)</li>
+</ul></li>
+<li><strong>Coefficients</strong>: Calculate model-averaged coefficient estimates <span class="math inline">\(\hat{\beta}\)</span></li>
+<li><strong>Predictions</strong>: Derive model-averaged predictive distributions.</li>
+<li><strong>Correlation</strong>: Look at how <span class="math inline">\(\gamma_p\)</span> is corelated with <span class="math inline">\(\gamma_q\)</span>.</li>
+</ul>
+<aside class="notes">
+<p>For example, in genomic studies where high-throughput technologies are used to profile thousands of genetic markers, only a few of those markers are expected to be associated with the phenotype or outcome under investigation.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="markov-chain-monte-carlo-mcmc" class="slide level2">
+<h2>Markov chain Monte Carlo (MCMC)</h2>
+<aside class="notes">
+<p>From computational point of view, when p is small (say p &lt; 20), the size of the model 2p is reasonably small or moderate, exhaustive enumeration of candidate models to compute the Bayes factor or other quantities of interest is possible, and the computation of posterior distribution takes into account all competing models. However, the size of competing models is growing dramatically as p increases, and therefore the exhaustive search of all possible models is not practical when p is large (say p ≥ 20) due to the heavy computational burden. Markov chain Monte Carlo (MCMC) methods are commonly implemented in such cases to perform a stochastic search of model space and allows efficient sampling from the posterior distribution of parameters. The MCMC visits the model space over the iterations and generates the individual posterior model probabilities. The regions of high posterior probability are visited more often than others. Examples of MCMC methods for model selection are the reversible-jump MCMC approach which allows the Markov chain to explore the parameter space of different dimensions [59], Gibbs sampler that is based on pseudo-priors to facilitate the chain jumping between competing models [15].</p>
+<p>shrinkage priors that induce sparsity, either by setting the regression coefficients of non-relevant covariates to zero or by shrinking them towards zero, are specified and MCMC techniques are used to sample from the posterior distribution.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<ul>
+<li><p><strong>When p is small (P&lt;20)</strong>, exhaustive search of all candidate models and computation of posterior probabilities is feasible.</p></li>
+<li><p><strong>When p is large</strong>, MCMC methods are commonly implemented to perform a stochastic search of model space and allows efficient samping from posterior distribution of parameters.</p></li>
+<li><p>For example,</p>
+<ul>
+<li><strong>Reversible-jump MCMC</strong> allows the Markov chain to explore the parameter space of different dimensions.</li>
+<li><strong>Gibbs sampling</strong> based on pseudo-priors can facilitate chain jumping between competing models.</li>
+</ul></li>
+</ul>
+</section>
+<section id="bayesian-approach-to-variable-selection-1" class="slide level2">
+<h2>Bayesian Approach to Variable Selection</h2>
+<h3 id="spike-and-slab-priors">2. Spike and Slab Priors</h3>
+<div class="columns">
+<div class="column" style="width:65%;">
+<ul>
+<li><p>The spike-and-slab prior is a two-point mixture distribution on <span class="math inline">\(\beta_j\)</span>: <span class="math display">\[\beta_j\sim (1 - \gamma_j)\color{steelblue}{\phi_0(\beta_j)} + \gamma_j\color{orange}{\phi_1(\beta_j)}\]</span></p>
+<ul>
+<li>Latent binary indicator <span class="math inline">\(\gamma_j \sim \text{Bernoulli}(h)\)</span> for <span class="math inline">\(j = 1, \ldots, p\)</span>.</li>
+<li><span class="math inline">\(\color{steelblue}{\phi_0(\beta_j)}\)</span>: spike distribution for modeling negligibly small effects.</li>
+<li><span class="math inline">\(\color{orange}{\phi_1(\beta_j)}\)</span>: slab distribution for modeling large effects.</li>
+</ul></li>
+<li><p>Selecting a subset of important predictors is equivalent to forcing the associated <span class="math inline">\(\beta_j\)</span> of those non-selected variables to zero.</p></li>
+</ul>
+<aside class="notes">
+<ul>
+<li><p>Various shrinkage priors have been proposed over the years. A widely used shrinkage prior is the spike- and-slab prior,</p></li>
+<li><ul>
+<li>Allows for jointly selecting the variables and estimating their regression coefficients.</li>
+</ul></li>
+<li><p>The discrete spike-and-slab formulation uses a mixture of a point mass at zero and a flat prior (Fig.a), whereas the continuous spike-and-slab prior uses a mixture of two normal distributions (Fig.b). Another widely used formulation puts the spike-and-slab prior on the variance of the regression coefficients.</p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div><div class="column" style="width:35%;">
+<p><img data-src="Picture1.png" width="550"></p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="stochastic-search-variable-selection-ssvs">Stochastic search variable selection (SSVS)</h3>
+<p>(George &amp; McCulloch, 1993)</p>
+<ul>
+<li>A Popular Spike-and-Slab Approach having an independent normal mixture prior on <span class="math inline">\(\beta_j\)</span>:</li>
+</ul>
+<p><span class="math display">\[
+\beta_j | \gamma_j \sim (1 - \gamma_j)\mathcal{N}(0, \tau^2_j) + \gamma_j\mathcal{N}(0, c^2_j\tau^2_j)
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\tau_j\)</span>: Small for spike to cluster <span class="math inline">\(\beta_j\)</span> around zero when <span class="math inline">\(\gamma_j = 0\)</span>.</p></li>
+<li><p><span class="math inline">\(c_j\)</span>: Large for slab to disperse <span class="math inline">\(\beta_j\)</span> when <span class="math inline">\(\gamma_j = 1\)</span>.</p></li>
+<li><p>Facilitates efficient <strong>Gibbs sampling</strong> for posterior computation:</p>
+<ul>
+<li>Assign initial values for <span class="math inline">\(\beta^{(0)}, \sigma^{2(0)}, \gamma^{(0)}\)</span>.</li>
+<li>Sample <span class="math inline">\(\beta^{(1)}\)</span> from <span class="math inline">\(f(\beta^{(1)} | y, \gamma^{(0)}, \sigma^{2(0)})\)</span>.</li>
+<li>Sample <span class="math inline">\(\sigma^{2(1)}\)</span> from <span class="math inline">\(f(\sigma^{2(1)} | y, \beta^{(1)}, \gamma^{(0)}))\)</span>.</li>
+<li>Sample vector <span class="math inline">\(\gamma^{(1)}\)</span> componentwise from <span class="math inline">\(f(\gamma_i^{(1)} | \beta^{(1)},\sigma^{2(1)}, \gamma_{(i)}^{(1)})\)</span>.</li>
+<li>Continue the process until convergence to form a Markov chain - Gibbs sequence.</li>
+</ul></li>
+<li><p>The densities of the spike and slab intersect at points <span class="math inline">\(\pm \xi_j\)</span>, <span class="math inline">\(\xi_j = \tau_j \sqrt{2 \log(c_j) \frac{c_j^2}{c_j^2 - 1}}\)</span>, serving as practical significance thresholds for <span class="math inline">\(\beta_j\)</span>.</p></li>
+</ul>
+<aside class="notes">
+<ul>
+<li><p>With this prior, we have 𝛽 j ∼ N(0,𝜏2 j ), if 𝛾 j = 0, and 𝛽 j ∼ N(0, c2 j𝜏2 j ), if 𝛾 j = 1. The idea here is to set 𝜏 j(&gt; 0) very small, such that those 𝛽 j for which 𝛾 j = 0 will tend to be clustered around 0, and to set cj very large, such that for those 𝛽 j for which 𝛾 j = 1 will tend to be dispersed. The implementation of the normal distributions on the two-points mixture facilitates the efficient Gibbs sampling process for the posterior</p></li>
+<li><p>C_i can also be interpretated as the signal to noise ratio at 0.</p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bayesian-approach-to-variable-selection-2" class="slide level2">
+<h2>Bayesian Approach to Variable Selection</h2>
+<h3 id="continuous-shrinkage-priors">3. Continuous Shrinkage Priors</h3>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Idea</strong>: place a prior on the coefficients <span class="math inline">\(\boldsymbol{\beta}\)</span> that concentrates near zero</p></li>
+<li><p>Mimics the spike-and-slab prior by a single continuous density.</p></li>
+<li><p>LASSO-type priors: Lasso, Ridge, Laplace (Bayes Lasso), Student-t</p></li>
+</ul>
+<aside class="notes">
+<ul>
+<li><p>Appealing computationally &amp; philosophically to relax assumption of exact zeros</p></li>
+<li><p>The Bayesian lasso specifies conditional Laplace priors on <span class="math inline">\(\beta_j|\sigma^2\)</span>, formulated as a scale mixture of normal distributions with an exponential mixing density for the scale parameter. The exponential mixing distribution has a single hyperparameter, which limits its flexibility in differentially shrinking small and large effects. This limitation can be overcome by using a class of shrinkage priors that introduce two shrinkage priors</p></li>
+<li><p>The horseshoe prior is flat, introduce two shrinkage parameters, which respectively control the global sparsity and the amount of shrinkage for each regression coefficient. The resulting marginalized priors for βj are characterized by a tight peak around zero that shrinks small coefficients to zero, and heavy tails that prevent excessive shrinkage of large coefficients.</p></li>
+<li><p>Laplacian: fat tails; horseshoe prior: singularity of zero (while others have finite density/bounded density near 0), unbounded density near the origin - placing lots of posterior mass near the origin. also fat tails, but really strongly prefers putting betas near zero</p></li>
+<li><p>Adaptability: Adjusts naturally to both unknown levels of sparsity and varying signal-to-noise ratios, making it suitable for a wide range of datasets.</p></li>
+<li><p><strong>Robustness</strong>: It stands strong against large, outlier signals that could otherwise skew results, ensuring the integrity of inferences.</p></li>
+<li><p>Good inference algorithms that accommodate this - black box inference algorithms like Hamiltomiom MCMC</p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div><div class="column" style="width:3%;">
+
+</div><div class="column" style="width:37%;">
+<div class="quarto-figure quarto-figure-right">
+<figure>
+<p><img data-src="horseshoe.png"></p>
+</figure>
+</div>
+</div><ul>
+<li><p><strong>Horseshoe prior</strong>:</p>
+<ul>
+<li>Global-local shrinkage prior: <span class="math display">\[\beta_j | \lambda_j, \tau \sim \mathcal{N}(0, \color{orange}{\lambda_j^2}\color{steelblue}{\tau^2)}, \quad \lambda_j \sim \text{Ca}^+(0,1)\]</span>
+<ul>
+<li>The <span class="math inline">\(\color{steelblue}{\tau} \rightarrow\)</span> the global shrinkage parameter (i.e.&nbsp;controlling the shrinkage of all coefficients).</li>
+<li>The <span class="math inline">\(\color{orange}{\lambda_j} \rightarrow\)</span> local shrinkage parameter (i.e.&nbsp;controlling the shrinkage of a specific coefficient)</li>
+<li><span class="math inline">\(\text{Ca}^+(0,1)\)</span> is a half-Cauchy distribution for the standard deviation <span class="math inline">\(\lambda_j\)</span>.</li>
+</ul></li>
+<li>Key advantages: Adaptability and Robustness</li>
+<li>Hamiltonian MCMC</li>
+</ul></li>
+<li><p>Others: Normal-gamma, Dirichlet-Laplace,…</p></li>
+</ul>
+</div>
+</section>
+<section id="applications" class="slide level2">
+<h2>Applications</h2>
+<h3 id="implementation-in-nimble">Implementation in Nimble</h3>
+<h4 class="smaller" id="simulate-data">Simulate Data</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(nimble)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(coda)         <span class="co"># for summarizing and plotting of MCMC output and diagnostic tests</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(ggmcmc)       <span class="co"># MCMC diagnostics with ggplot</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># data ########################################################################</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>N <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>p <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(N<span class="sc">*</span>p), <span class="at">nrow =</span> N, <span class="at">ncol =</span> p)</span>
+<span id="cb1-11"><a href="#cb1-11"></a>true_betas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>),</span>
+<span id="cb1-12"><a href="#cb1-12"></a>                <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, X<span class="sc">%*%</span>true_betas, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="co"># standard linear regression ##################################################</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ X)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.10684 -0.46276 -0.01661  0.46989  2.28986 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.08712    0.09133   0.954  0.34292    
+X1           0.21730    0.09988   2.176  0.03239 *  
+X2           0.13257    0.09221   1.438  0.15423    
+X3           0.18998    0.09564   1.986  0.05025 .  
+X4           0.59139    0.09006   6.567 4.04e-09 ***
+X5           0.55484    0.09385   5.912 7.03e-08 ***
+X6           0.20593    0.09652   2.134  0.03579 *  
+X7          -0.01480    0.08618  -0.172  0.86407    
+X8          -0.03020    0.09241  -0.327  0.74465    
+X9          -0.02077    0.08532  -0.243  0.80831    
+X10         -0.01368    0.08850  -0.155  0.87750    
+X11         -0.29853    0.09007  -3.314  0.00136 ** 
+X12          0.10295    0.09271   1.110  0.27000    
+X13         -0.09576    0.09896  -0.968  0.33598    
+X14          0.05354    0.09192   0.582  0.56180    
+X15         -0.03193    0.09359  -0.341  0.73380    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8465 on 84 degrees of freedom
+Multiple R-squared:  0.5672,    Adjusted R-squared:  0.4899 
+F-statistic: 7.339 on 15 and 84 DF,  p-value: 4.94e-10</code></pre>
+</div>
+</div>
+<h4 id="nimble-code">Nimble Code</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># linear model with indicator variable ########################################</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>lmIndicatorCode <span class="ot">&lt;-</span> <span class="fu">nimbleCode</span>({</span>
+<span id="cb3-3"><a href="#cb3-3"></a>  </span>
+<span id="cb3-4"><a href="#cb3-4"></a>   <span class="co"># likelihood</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N) {</span>
+<span id="cb3-6"><a href="#cb3-6"></a>    pred.y[i] <span class="ot">&lt;-</span> <span class="fu">inprod</span>(X[i, <span class="dv">1</span><span class="sc">:</span>p], zbeta[<span class="dv">1</span><span class="sc">:</span>p])</span>
+<span id="cb3-7"><a href="#cb3-7"></a>    y[i] <span class="sc">~</span> <span class="fu">dnorm</span>(pred.y[i], <span class="at">sd =</span> sigma)</span>
+<span id="cb3-8"><a href="#cb3-8"></a>  }</span>
+<span id="cb3-9"><a href="#cb3-9"></a>  </span>
+<span id="cb3-10"><a href="#cb3-10"></a>   <span class="co"># beta</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>p) {</span>
+<span id="cb3-12"><a href="#cb3-12"></a>    z[i] <span class="sc">~</span> <span class="fu">dbern</span>(psi) <span class="do">## indicator variable for each coefficient</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>    beta[i] <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span>
+<span id="cb3-14"><a href="#cb3-14"></a>    zbeta[i] <span class="ot">&lt;-</span> z[i] <span class="sc">*</span> beta[i]  <span class="do">## indicator * beta</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a>  }</span>
+<span id="cb3-16"><a href="#cb3-16"></a>  </span>
+<span id="cb3-17"><a href="#cb3-17"></a>  <span class="co"># prior</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a>  sigma <span class="sc">~</span> <span class="fu">dunif</span>(<span class="dv">0</span>, <span class="dv">20</span>)  <span class="do">## uniform prior per Gelman (2006)</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a>  psi <span class="sc">~</span> <span class="fu">dunif</span>(<span class="dv">0</span>,<span class="dv">1</span>)    <span class="do">## prior on inclusion probability</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a>  </span>
+<span id="cb3-21"><a href="#cb3-21"></a>})</span>
+<span id="cb3-22"><a href="#cb3-22"></a></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="do">## constants ##</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>lmIndicatorConstants <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N =</span> <span class="dv">100</span>, <span class="at">p =</span> <span class="dv">15</span>)</span>
+<span id="cb3-25"><a href="#cb3-25"></a></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="do">## initial values ##</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a>lmIndicatorInits <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">sigma =</span> <span class="dv">1</span>, <span class="at">psi =</span> <span class="fl">0.5</span>,</span>
+<span id="cb3-28"><a href="#cb3-28"></a>                         <span class="at">beta =</span> <span class="fu">rnorm</span>(lmIndicatorConstants<span class="sc">$</span>p),</span>
+<span id="cb3-29"><a href="#cb3-29"></a>                         <span class="at">z =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>, lmIndicatorConstants<span class="sc">$</span>p, <span class="fl">0.5</span>))</span>
+<span id="cb3-30"><a href="#cb3-30"></a><span class="do">## data ##</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a>lmIndicatorData  <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">y =</span> y, <span class="at">X =</span> X)</span>
+<span id="cb3-32"><a href="#cb3-32"></a></span>
+<span id="cb3-33"><a href="#cb3-33"></a><span class="do">### Define and compile the model</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a>lmIndicatorModel <span class="ot">&lt;-</span> <span class="fu">nimbleModel</span>(<span class="at">code =</span> lmIndicatorCode, </span>
+<span id="cb3-35"><a href="#cb3-35"></a>                                <span class="at">constants =</span> lmIndicatorConstants,</span>
+<span id="cb3-36"><a href="#cb3-36"></a>                                <span class="at">inits =</span> lmIndicatorInits, </span>
+<span id="cb3-37"><a href="#cb3-37"></a>                                <span class="at">data =</span> lmIndicatorData)</span>
+<span id="cb3-38"><a href="#cb3-38"></a></span>
+<span id="cb3-39"><a href="#cb3-39"></a><span class="do">### Configuring RJMCMC</span></span>
+<span id="cb3-40"><a href="#cb3-40"></a>lmIndicatorConf <span class="ot">&lt;-</span> <span class="fu">configureMCMC</span>(lmIndicatorModel)</span>
+<span id="cb3-41"><a href="#cb3-41"></a>lmIndicatorConf<span class="sc">$</span><span class="fu">addMonitors</span>(<span class="st">'z'</span>)</span>
+<span id="cb3-42"><a href="#cb3-42"></a><span class="fu">configureRJ</span>(lmIndicatorConf,</span>
+<span id="cb3-43"><a href="#cb3-43"></a>            <span class="at">targetNodes =</span> <span class="st">'beta'</span>,</span>
+<span id="cb3-44"><a href="#cb3-44"></a>            <span class="at">indicatorNodes =</span> <span class="st">'z'</span>,</span>
+<span id="cb3-45"><a href="#cb3-45"></a>            <span class="at">control =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">scale =</span> <span class="fl">0.2</span>))</span>
+<span id="cb3-46"><a href="#cb3-46"></a></span>
+<span id="cb3-47"><a href="#cb3-47"></a><span class="co"># Check the assigned samplers</span></span>
+<span id="cb3-48"><a href="#cb3-48"></a>lmIndicatorConf<span class="sc">$</span><span class="fu">printSamplers</span>(<span class="fu">c</span>(<span class="st">"z"</span>, <span class="st">"beta"</span>))</span>
+<span id="cb3-49"><a href="#cb3-49"></a></span>
+<span id="cb3-50"><a href="#cb3-50"></a><span class="co"># Build and run Reversible Jump MCMC</span></span>
+<span id="cb3-51"><a href="#cb3-51"></a>mcmcIndicatorRJ <span class="ot">&lt;-</span> <span class="fu">buildMCMC</span>(lmIndicatorConf)</span>
+<span id="cb3-52"><a href="#cb3-52"></a>cIndicatorModel <span class="ot">&lt;-</span> <span class="fu">compileNimble</span>(lmIndicatorModel)</span>
+<span id="cb3-53"><a href="#cb3-53"></a>CMCMCIndicatorRJ <span class="ot">&lt;-</span> <span class="fu">compileNimble</span>(mcmcIndicatorRJ, <span class="at">project =</span> lmIndicatorModel)</span>
+<span id="cb3-54"><a href="#cb3-54"></a><span class="co"># Set seed</span></span>
+<span id="cb3-55"><a href="#cb3-55"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb3-56"><a href="#cb3-56"></a></span>
+<span id="cb3-57"><a href="#cb3-57"></a><span class="do">### Run MCMC</span></span>
+<span id="cb3-58"><a href="#cb3-58"></a><span class="fu">system.time</span>(</span>
+<span id="cb3-59"><a href="#cb3-59"></a>  samplesIndicator <span class="ot">&lt;-</span> <span class="fu">runMCMC</span>(CMCMCIndicatorRJ, </span>
+<span id="cb3-60"><a href="#cb3-60"></a>                              <span class="at">niter =</span> <span class="dv">10000</span>, </span>
+<span id="cb3-61"><a href="#cb3-61"></a>                              <span class="at">nburnin =</span> <span class="dv">5000</span>,</span>
+<span id="cb3-62"><a href="#cb3-62"></a>                              <span class="at">nchains =</span> <span class="dv">3</span>,</span>
+<span id="cb3-63"><a href="#cb3-63"></a>                              <span class="at">summary =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-64"><a href="#cb3-64"></a>                              <span class="at">samplesAsCodaMCMC =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-65"><a href="#cb3-65"></a>)</span>
+<span id="cb3-66"><a href="#cb3-66"></a></span>
+<span id="cb3-67"><a href="#cb3-67"></a><span class="co">#save(samplesIndicator, lmIndicatorModel, file = "nimble_example.rdata")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<h4 id="check-convergence-and-posterior-distribution">Check Convergence and Posterior Distribution</h4>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="Bayesian_variable_selection_review_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
+</div>
+<div class="cell-output-display">
+<p><img data-src="Bayesian_variable_selection_review_files/figure-revealjs/unnamed-chunk-3-2.png" width="960"></p>
+</div>
+</div>
+<h4 id="beta-coefficients-and-pip">Beta coefficients and PIP</h4>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Posterior summaries of beta coefficients.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Variable </th>
+   <th style="text-align:right;"> Mean </th>
+   <th style="text-align:right;"> Median </th>
+   <th style="text-align:right;"> St.Dev. </th>
+   <th style="text-align:right;"> 95%CI_low </th>
+   <th style="text-align:right;"> 95%CI_upp </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> beta[1] </td>
+   <td style="text-align:right;"> 0.0020117 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0212991 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[2] </td>
+   <td style="text-align:right;"> 0.0017984 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0194360 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[3] </td>
+   <td style="text-align:right;"> 0.0071159 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0429586 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.1540940 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[4] </td>
+   <td style="text-align:right;"> 0.5308537 </td>
+   <td style="text-align:right;"> 0.5324281 </td>
+   <td style="text-align:right;"> 0.0935204 </td>
+   <td style="text-align:right;"> 0.3483426 </td>
+   <td style="text-align:right;"> 0.7119455 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[5] </td>
+   <td style="text-align:right;"> 0.5565711 </td>
+   <td style="text-align:right;"> 0.5562055 </td>
+   <td style="text-align:right;"> 0.0939583 </td>
+   <td style="text-align:right;"> 0.3646693 </td>
+   <td style="text-align:right;"> 0.7433105 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[6] </td>
+   <td style="text-align:right;"> 0.0065472 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0399530 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.1252258 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[7] </td>
+   <td style="text-align:right;"> 0.0000387 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0043773 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[8] </td>
+   <td style="text-align:right;"> -0.0000297 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0036451 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[9] </td>
+   <td style="text-align:right;"> -0.0000394 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0045983 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[10] </td>
+   <td style="text-align:right;"> -0.0001377 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0056149 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[11] </td>
+   <td style="text-align:right;"> -0.1449557 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.1657057 </td>
+   <td style="text-align:right;"> -0.4523247 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[12] </td>
+   <td style="text-align:right;"> 0.0007470 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0107174 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[13] </td>
+   <td style="text-align:right;"> -0.0003178 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0081658 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[14] </td>
+   <td style="text-align:right;"> 0.0001830 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0062315 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> beta[15] </td>
+   <td style="text-align:right;"> -0.0002390 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0060827 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+<div class="cell-output-display">
+<p><img data-src="Bayesian_variable_selection_review_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
+</div>
+</div>
+<h3 id="model-probabilities">Model Probabilities</h3>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="font-size: 15px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">Top 5 models with highest posterior probabilities</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> z[1] </th>
+   <th style="text-align:right;"> z[2] </th>
+   <th style="text-align:right;"> z[3] </th>
+   <th style="text-align:right;"> z[4] </th>
+   <th style="text-align:right;"> z[5] </th>
+   <th style="text-align:right;"> z[6] </th>
+   <th style="text-align:right;"> z[7] </th>
+   <th style="text-align:right;"> z[8] </th>
+   <th style="text-align:right;"> z[9] </th>
+   <th style="text-align:right;"> z[10] </th>
+   <th style="text-align:right;"> z[11] </th>
+   <th style="text-align:right;"> z[12] </th>
+   <th style="text-align:right;"> z[13] </th>
+   <th style="text-align:right;"> z[14] </th>
+   <th style="text-align:right;"> z[15] </th>
+   <th style="text-align:right;"> N </th>
+   <th style="text-align:right;"> prob </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 2314 </td>
+   <td style="text-align:right;"> 0.4628 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 2203 </td>
+   <td style="text-align:right;"> 0.4406 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 87 </td>
+   <td style="text-align:right;"> 0.0174 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 63 </td>
+   <td style="text-align:right;"> 0.0126 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 0.0104 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><strong>With 10,000 iterations, only ~0.2% (55/2^15) of the parameters space was searched.</strong></p>
+</section>
+<section id="extensions-and-recent-development" class="slide level2">
+<h2>Extensions and Recent Development</h2>
+<p>Bayesian variable selection methods have been extended to a wide variety of models.</p>
+<h4 id="multivariate-regression-models">Multivariate Regression Models</h4>
+<ul>
+<li><strong>Spike-and-Slab Priors</strong> (Brown et al.&nbsp;1998)</li>
+<li><strong>Multivariate Constructions</strong> (Lee et al.&nbsp;2017)</li>
+</ul>
+<aside class="notes">
+<ul>
+<li><strong>Spike-and-Slab Priors</strong>: Variables are selected as relevant to either all or none of the response variables.</li>
+<li><strong>Multivariate Constructions</strong>: Allow each covariate to be relevant for subsets or individual response variables.</li>
+<li><strong>Generalized Linear Models</strong>: Tailoring selection methods to different distributions of the response variable.</li>
+<li><strong>Random Effect Models</strong>: Incorporating variable selection in models with random effects.</li>
+<li><strong>Time-Varying Coefficient Models</strong>: Capturing dynamics in the relationship between covariates and response over time.</li>
+<li><strong>Mixture Models</strong>: For unsupervised clustering, identifying groups within the data.</li>
+<li><strong>Gaussian Graphical Models</strong>: Estimating networks and dependencies between variables in single and multiple datasets.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<h4 id="further-extensions">Further Extensions</h4>
+<ul>
+<li><strong>Generalized Linear Models</strong> and <strong>Random Effect Models</strong> (Scheipl, Fahrmeir &amp; Kneib, 2012)</li>
+<li><strong>Time-Varying Coefficient Models</strong> (Belmonte,Koop &amp; Korobilis, 2013)</li>
+<li><strong>Spatially-Varying Coefficient Models</strong> (Reich et al, 2010) (Hu 2021)</li>
+</ul>
+<h4 id="advanced-model-structures">Advanced Model Structures</h4>
+<ul>
+<li><strong>Mixture Models</strong> for unsupervised clustering (Tadesse and Vannucci, 2005)</li>
+<li><strong>Gaussian Graphical Models</strong> (Peterson, Stingo, &amp; Vannucci, 2015) (Li &amp; Zhang, 2010)</li>
+</ul>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<ol type="1">
+<li><p>O’Hara RB, Sillanpää MJ. A review of Bayesian variable selection methods: what, how and which. Bayesian Analysis. 2009;4(1):85-117. doi:10.1214/09-BA403</p></li>
+<li><p>George EI, McCulloch RE. Approaches for Bayesian Variable Selection. Statistica Sinica. 1997;7(2):339-373.</p></li>
+<li><p>Carlin BP, Chib S. Bayesian Model Choice Via Markov Chain Monte Carlo Methods. Journal of the Royal Statistical Society: Series B (Methodological). 1995;57(3):473-484. doi:10.1111/j.2517-6161.1995.tb02042.x</p></li>
+<li><p>Tang X, Xu X, Ghosh M, Ghosh P. Bayesian Variable Selection and Estimation Based on Global-Local Shrinkage Priors. Sankhya A. 2016;80. doi:10.1007/s13171-017-0118-2</p></li>
+<li><p>García-Donato G, Castellanos ME, Quirós A. Bayesian Variable Selection with Applications in Health Sciences. Mathematics. 2021;9(3):218. doi:10.3390/math9030218</p></li>
+<li><p>Dellaportas P, Forster JJ, Ntzoufras I. On Bayesian model and variable selection using MCMC. Statistics and Computing. 2002;12(1):27-36. doi:10.1023/A:1013164120801</p></li>
+<li><p>Boehm Vock LF, Reich BJ, Fuentes M, Dominici F. Spatial variable selection methods for investigating acute health effects of fine particulate matter components. Biometrics. 2015;71(1):167-177. doi:10.1111/biom.12254</p></li>
+<li><p>Hu G. Spatially varying sparsity in dynamic regression models. Econometrics and Statistics. 2021;17:23-34. doi:10.1016/j.ecosta.2020.08.002</p></li>
+<li><p>Regresssion I, Geweke J. Variable Selection and Model Comparison in Regresssion. Bayesian Statistics. 1995;5.</p></li>
+<li><p>Kuo L, Mallick B. Variable Selection for Regression Models. Sankhyā: The Indian Journal of Statistics, Series B (1960-2002). 1998;60(1):65-81.</p></li>
+<li><p>George EI, McCulloch RE. Variable Selection via Gibbs Sampling. Journal of the American Statistical Association. 1993;88(423):881-889. doi:10.1080/01621459.1993.10476353</p></li>
+</ol>
+</section>
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>Thank you!</h1>
+<div class="footer footer-default">
+
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="Bayesian_variable_selection_review_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="Bayesian_variable_selection_review_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="Bayesian_variable_selection_review_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="Bayesian_variable_selection_review_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="Bayesian_variable_selection_review_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="Bayesian_variable_selection_review_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="Bayesian_variable_selection_review_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="Bayesian_variable_selection_review_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="Bayesian_variable_selection_review_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="Bayesian_variable_selection_review_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="Bayesian_variable_selection_review_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': true,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        setTimeout(function() {
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          let href = ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    });
+    </script>
+    
+
+</body></html>
